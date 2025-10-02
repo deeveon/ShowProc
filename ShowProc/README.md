@@ -1,6 +1,6 @@
 # ShowProc
 
-ShowProc is a replacement for the "status" command in the SYS:c drawer.
+ShowProc is a replacement for the AmigaOS "status" command in the SYS:c drawer.
 
 ## Improvements
 * Much better readability
@@ -13,11 +13,10 @@ ShowProc is a replacement for the "status" command in the SYS:c drawer.
 
 ## Current limitations
 * No global vector info (seems from the DOS RKM it's basically obsolete anyway)
-* No TCB/CLI options (don't see the need)
 * No COMMAND option (yet)
 * No Ctrl-C support
 
-## To Do
+## Wish List
 * COM=COMMAND option
 * Ctrl-C handling for the app
 * Ability to send a break to a process (e.g. ShowProc PROCESS=4 BREAK)

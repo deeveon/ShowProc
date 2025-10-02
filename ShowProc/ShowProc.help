@@ -1,0 +1,114 @@
+    NAME
+    
+        ShowProc - Lists information about Shell/CLI processes.
+
+    FORMAT
+    
+        ShowProc [<process>] [FULL] [SHORT] [TCB] [CLI] [ALL] 
+                 [COMMAND <command>|<pattern>]
+
+    TEMPLATE
+    
+        PROCESS/N,FULL/S,TCB/S,CLI=ALL/S,COM=COMMAND/K
+
+    PATH
+    
+        C:ShowProc
+
+    FUNCTION
+    
+        ShowProc lists all currently running Shell/CLI processes in the
+        range 1 to 999 along with useful information about each, such as
+        process priority and stack usage.
+
+
+    OPTIONS
+
+        The following options are provided to control what ShowProc
+        outputs to the Shell/CLI. If multiple output modes are provided,
+        ShowProc uses the most verbose one. 
+        
+            FULL > TCB > SHORT/CLI/ALL
+
+        <process>
+        
+            If a <process> number (1-999) is provided, ShowProc will
+            show information about only that process. A process number
+            can be provided with or without the PROCESS keyword.
+        
+        FULL or F
+    
+            Outputs the number, command name (if any), priority, stack
+            size, stack amount in use, FAILT level, last return code and
+            whether or not the process is runing in the background.
+            
+            FULL is the default output mode and therefore is not necessary
+            to specify, but is provided for compatibility with the STATUS
+            AmigaOS command.
+
+		SHORT or S
+		
+		    Outputs only the process number and command name (if any).
+		    
+		    This is the output mode most similar to the default for the
+		    STATUS AmigaOS command. You can create an ALIAS to use ShowProc
+		    as a substitute for STATUS as follows:
+        
+                1> ALIAS status ShowProc SHORT
+
+        TCB or T
+        
+            Outputs the same information as FULL except it omits the 
+            command name information.
+
+        CLI/ALL
+        
+            Same as SHORT. Note: This may change in a future release though.
+
+        COMMAND or COM  (NOT IMPLEMENTED YET)
+
+            You can search for a process using a command name, path or
+            wildcard pattern. If found, the Shell/CLI number is output
+            and the program return code is set to 0 (SUCCESS). Otherwise,
+            nothing is output and the return code is set to 5 (WARN).
+
+    EXAMPLES
+    
+        1) Show detailed information about all processes currently running.
+        
+           1> ShowProc
+                                               Stack  Stack Fail
+           CLI Process Command Name       Pri   Used   Size  Lvl   RC   BG
+           --- -------------------------- --- ------ ------ ---- ---- ----
+             1 ShowProc                     0    822   3968   10    0   No
+             2 Workbench                    1    190   8000   10    0  Yes
+             3 No command loaded
+             5 TextEdit                     0    782   8192   10    0  Yes
+
+        2) Show detailed information about a single process.
+
+           1> ShowProc 1
+                                               Stack  Stack Fail
+           CLI Process Command Name       Pri   Used   Size  Lvl   RC   BG
+           --- -------------------------- --- ------ ------ ---- ---- ----
+             1 ShowProc                     0    822   3968   10    0   No
+
+        3) Show only the process number and command name for all processes.
+
+           1> ShowProc SHORT
+
+           CLI Process Command Name
+           --- --------------------------
+             1 ShowProc
+             2 Workbench
+             3 No command loaded
+             5 TextEdit
+
+        4) Send a BREAK to the process executing the COPY command.
+
+           1> ShowProc >RAM:Xyz COMMAND=COPY
+           1> BREAK <RAM:Xyz  >NIL: ?
+
+    SEE ALSO
+    
+        STATUS, BREAK, ALIAS
