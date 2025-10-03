@@ -1,3 +1,11 @@
 # Ignore object files and build artifacts
 *.o
+
+# Ignore linker files
 *.lnk
+
+# Ignore text files which will mostly be test case outputs
+*.txt
+
+# Ignore executable files
+ShowProc/ShowProc
