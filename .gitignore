@@ -8,4 +8,6 @@
 *.txt
 
 # Ignore executable files
-ShowProc/ShowProc
+releases
+*.lha
+ShowProc
