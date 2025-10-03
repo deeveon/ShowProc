@@ -71,7 +71,7 @@ int main(void)
 		if (opts[OPT_PROCESS]) {
 			start = finish = *((long*)opts[OPT_PROCESS]);
 			if (start < 1 || start > 999) {
-				Printf("%s\n", STR_INVALID_PROC_NUM);
+				Printf("%s\n", STR_INV_PROC_NUM);
 				rc = RETURN_FAIL;
 				goto exit;
 			}
@@ -93,18 +93,18 @@ int main(void)
 		switch (mode) {
 			case MODE_VERBOSE:
 				Printf(FORMAT_VERBOSE, VERBOSE_TOP);
-				Printf(FORMAT_VERBOSE, VERBOSE_BOTTOM);
-				Printf(FORMAT_VERBOSE, VERBOSE_DIVIDER);
+				Printf(FORMAT_VERBOSE, VERBOSE_BOT);
+				Printf(FORMAT_VERBOSE, VERBOSE_DIV);
 				break;
 			case MODE_TCB:
 				Printf(FORMAT_TCB, TCB_TOP);
-				Printf(FORMAT_TCB, TCB_BOTTOM);
-				Printf(FORMAT_TCB, TCB_DIVIDER);
+				Printf(FORMAT_TCB, TCB_BOT);
+				Printf(FORMAT_TCB, TCB_DIV);
 				break;
 			case MODE_SHORT:
 				Printf(FORMAT_SHORT, SHORT_TOP);
-				Printf(FORMAT_SHORT, SHORT_BOTTOM);
-				Printf(FORMAT_SHORT, SHORT_DIVIDER);
+				Printf(FORMAT_SHORT, SHORT_BOT);
+				Printf(FORMAT_SHORT, SHORT_DIV);
 				break;
 			case MODE_COMMAND:
 				// No header for command mode
@@ -144,13 +144,13 @@ int main(void)
 
 			// Make sure we got a valid pointer
 			if (cli == NULL) {
-				Printf(" %s\n", STR_ERROR_GETTING_CLI);
+				Printf(" %s\n", STR_ERR_GET_CLI);
 				continue;	// Go to next process
 			}
 
 			// Get the command name
 			if (bstr2cstr(cli->cli_CommandName, cmd, sizeof(cmd)) < 0) {
-				Printf(" %s\n", STR_ERROR_GETTING_CMD);
+				Printf(" %s\n", STR_ERR_GET_CMD);
 				rc = RETURN_FAIL;
 				continue;	// Go to next process
 			}
@@ -162,7 +162,7 @@ int main(void)
 
 				// Invalid pattern
 				if (result == -1) {
-					Printf("%s\n", STR_PATTERN_TOO_LONG);
+					Printf("%s\n", STR_PAT_TOO_LONG);
 					rc = RETURN_FAIL;
 					break; // Exit the for loop
 				}
