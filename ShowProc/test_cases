@@ -1,0 +1,369 @@
+. This script runs a series of test cases for the ShowProc command and verifies
+. the return code matches expectations.
+.
+. Use the EXECUTE command to run this script. If you execute it without any
+. arguments, it will only show the pass/fail results of each test case. If you
+. provide the "full" argument, it will show the full output of each test case.
+.
+. Example usage:
+.	EXECUTE test_cases 						(shows only the pass/fail results)
+.	EXECUTE test_cases full					(shows the output also)
+.   EXECUTE test_cases results.txt 			(saves output to results.txt)
+. 
+.key full/S
+.def full ">NIL:"
+.bra {
+.ket }
+. 
+. Some test cases are expected to fail or give warnings and we do not want those
+. cases to stop the script, so we set failat to 100 to ignore failures.
+failat 100
+
+echo "--------------------------------------------------------------------------------"
+echo "Starting ShowProc test cases..."
+echo "--------------------------------------------------------------------------------"
+echo ""
+
+. Display the current date and time.
+date
+
+echo ""
+echo "--------------------------------------------------------------------------------"
+echo "Test case 1: showproc"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc {full}
+if $rc eq 0
+	echo "=== Test case 1 passed"
+else
+	echo "=== Test case 1 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 2: showproc version"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc version {full}
+if $rc eq 0
+	echo "=== Test case 2 passed"
+else
+	echo "=== Test case 2 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 3: showproc ver"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc ver {full}
+if $rc eq 0
+	echo "=== Test case 3 passed"
+else
+	echo "=== Test case 3 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 4: showproc process"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc process {full}
+if FAIL
+	echo "=== Test case 4 passed"
+else
+	echo "=== Test case 4 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 5: showproc process 2"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc process 2 {full}
+if $rc eq 0
+	echo "=== Test case 5 passed"
+else
+	echo "=== Test case 5 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 6: showproc p"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc p {full}
+if FAIL
+	echo "=== Test case 6 passed"
+else
+	echo "=== Test case 6 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 7: showproc p 2"
+echo "--------------------------------------------------------------------------------"
+showproc p 2 {full}
+echo ""
+if $rc eq 0
+	echo "=== Test case 7 passed"
+else
+	echo "=== Test case 7 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 8: showproc 2"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc 2 {full}
+if $rc eq 0
+	echo "=== Test case 8 passed"
+else
+	echo "=== Test case 8 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 9: showproc -1"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc -1 {full}
+if FAIL
+	echo "=== Test case 9 passed"
+else
+	echo "=== Test case 9 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 10: showproc 0"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc 0 {full}
+if FAIL
+	echo "=== Test case 10 passed"
+else
+	echo "=== Test case 10 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 11: showproc 1000"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc 1000 {full}
+if FAIL
+	echo "=== Test case 11 passed"
+else
+	echo "=== Test case 11 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 12: showproc full"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc full {full}
+if $rc eq 0
+	echo "=== Test case 12 passed"
+else
+	echo "=== Test case 12 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 13: showproc f"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc f {full}
+if $rc eq 0
+	echo "=== Test case 13 passed"
+else
+	echo "=== Test case 13 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 14: showproc full"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc full {full}
+if $rc eq 0
+	echo "=== Test case 14 passed"
+else
+	echo "=== Test case 14 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 15: showproc s"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc s {full}
+if $rc eq 0
+	echo "=== Test case 15 passed"
+else
+	echo "=== Test case 15 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 16: showproc tcb"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc tcb {full}
+if $rc eq 0
+	echo "=== Test case 16 passed"
+else
+	echo "=== Test case 16 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 17: showproc cli"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc cli {full}
+if $rc eq 0
+	echo "=== Test case 17 passed"
+else
+	echo "=== Test case 17 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 18: showproc all"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc all {full}
+if $rc eq 0
+	echo "=== Test case 18 passed"
+else
+	echo "=== Test case 18 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 19: showproc full full tcb cli all"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc full full tcb cli all {full}
+if $rc eq 0
+	echo "=== Test case 19 passed"
+else
+	echo "=== Test case 19 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 20: showproc all full tcb cli"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc all full tcb cli {full}
+if $rc eq 0
+	echo "=== Test case 20 passed"
+else
+	echo "=== Test case 20 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 21: showproc tcb full all cli full"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc tcb full all cli full {full}
+if $rc eq 0
+	echo "=== Test case 21 passed"
+else
+	echo "=== Test case 21 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 22: showproc command=showproc"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc command=showproc {full}
+if $rc eq 0
+	echo "=== Test case 22 passed"
+else
+	echo "=== Test case 22 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 23: showproc command=show#?"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc com=show#? {full}
+if $rc eq 0
+	echo "=== Test case 23 passed"
+else
+	echo "=== Test case 23 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 24: showproc command=show????"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc com=show???? {full}
+if $rc eq 0
+	echo "=== Test case 24 passed"
+else
+	echo "=== Test case 24 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 25: showproc command=s?owp?oc"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc com=s?owp?oc {full}
+if $rc eq 0
+	echo "=== Test case 25 passed"
+else
+	echo "=== Test case 25 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 26: showproc command=show full"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc com=show#? full {full}
+if $rc eq 0
+	echo "=== Test case 26 passed"
+else
+	echo "=== Test case 26 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 27: showproc full command=show#?"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc full com=show#? {full}
+if $rc eq 0
+	echo "=== Test case 27 passed"
+else
+	echo "=== Test case 27 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "Test case 28: showproc command=show"
+echo "--------------------------------------------------------------------------------"
+echo ""
+showproc com=show {full}
+if WARN
+	echo "=== Test case 28 passed"
+else
+	echo "=== Test case 28 FAILED"
+endif
+echo ""
+
+echo "--------------------------------------------------------------------------------"
+echo "All test cases completed."
+echo "--------------------------------------------------------------------------------"
