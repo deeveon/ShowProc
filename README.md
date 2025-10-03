@@ -2,5 +2,5 @@
 A place for miscellaneous small AmigaOS apps that I make.
 
 ## ShowProc
-ShowProc is a replacement for the "status" command in the SYS:c drawer.
-
+SShowProc is a replacement for the AmigaOS STATUS command in the SYS:C drawer
+that displays process information for all Shell/CLI processes.
