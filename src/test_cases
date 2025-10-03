@@ -185,10 +185,10 @@ endif
 echo ""
 
 echo "--------------------------------------------------------------------------------"
-echo "Test case 14: showproc full"
+echo "Test case 14: showproc short"
 echo "--------------------------------------------------------------------------------"
 echo ""
-showproc full {full}
+showproc short {full}
 if $rc eq 0
 	echo "=== Test case 14 passed"
 else
@@ -245,10 +245,10 @@ endif
 echo ""
 
 echo "--------------------------------------------------------------------------------"
-echo "Test case 19: showproc full full tcb cli all"
+echo "Test case 19: showproc full short tcb cli all"
 echo "--------------------------------------------------------------------------------"
 echo ""
-showproc full full tcb cli all {full}
+showproc full short tcb cli all {full}
 if $rc eq 0
 	echo "=== Test case 19 passed"
 else
@@ -269,10 +269,10 @@ endif
 echo ""
 
 echo "--------------------------------------------------------------------------------"
-echo "Test case 21: showproc tcb full all cli full"
+echo "Test case 21: showproc tcb short all cli full"
 echo "--------------------------------------------------------------------------------"
 echo ""
-showproc tcb full all cli full {full}
+showproc tcb short all cli full {full}
 if $rc eq 0
 	echo "=== Test case 21 passed"
 else
