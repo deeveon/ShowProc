@@ -53,4 +53,4 @@ located in the AmigaOS (root) folder.
 
 | Version  | Description
 |----------|-----------------
-| 47.1	   | Initial version
+| 37.1	   | Initial version
