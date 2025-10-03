@@ -4,9 +4,6 @@
 # Ignore linker files
 *.lnk
 
-# Ignore text files which will mostly be test case outputs
-*.txt
-
 # Ignore executable files
 releases
 *.lha
