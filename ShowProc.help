@@ -17,10 +17,14 @@
 
     FUNCTION
     
-        ShowProc lists all currently running Shell/CLI processes in the
-        range 1 to 999 along with useful information about each, such as
-        process priority and stack usage.
-
+        ShowProc lists currently running Shell/CLI processes along with various
+		details about each one. It is intended to be an improvement over the
+		AmigaOS STATUS command. ShowProc improves readability, by outputting
+		process information in a table. It has additional process information
+		such as if it's running in the background, how much stack it's using,
+		the current FAILAT level and the return code of the most recently run
+		command/application. It also allows you to use standard AmigaOS 
+		wildcards when searching for a process.
 
     OPTIONS
 
