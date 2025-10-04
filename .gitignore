@@ -1,3 +1,6 @@
+# Ignore editor files
+.vscode/
+
 # Ignore object files and build artifacts
 *.o
 
@@ -5,6 +8,5 @@
 *.lnk
 
 # Ignore executable files
-releases
-*.lha
+releases/
 ShowProc

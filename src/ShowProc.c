@@ -16,6 +16,9 @@
 // Embed version tag into binary
 const char* version = VERSTAG;
 
+// Externs
+extern struct ExecBase* SysBase;
+
 // Function prototypes
 BYTE 	bstrlen(BSTR bstring);
 size_t 	bstr2cstr(BSTR bstring, char* buffer, size_t bufsize);
@@ -41,6 +44,12 @@ int main(void)
 	MODE 	mode = MODE_VERBOSE;
 	long	result;
 	int		rc = RETURN_OK;
+
+	// Check Kickstart version
+	if (SysBase->LibNode.lib_Version < KICKSTART_MIN_VER) {
+		Printf("%s\n", STR_OS_TOO_OLD);
+		return RETURN_FAIL;
+	}
 
 	// Capture current task priority & set the priority a bit higher to reduce
 	// the risk of changes occurring while reading the process & CLI info
