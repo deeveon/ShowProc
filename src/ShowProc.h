@@ -28,10 +28,17 @@ typedef enum MODE {
 #define OPT_COMMAND			6			// Searches for a process by command name
 #define OPT_COUNT 			7
 
+//------------------------------------------------------------------------------
+// Constants
+//------------------------------------------------------------------------------
+#define KICKSTART_MIN_VER	37		// Minimum Kickstart version required (37 = 2.04)
+
+
 // --------------------------------------------------------------------------------
 // String constants
 // --------------------------------------------------------------------------------
 #define PROGRAM				"ShowProc"
+#define STR_OS_TOO_OLD		"This program requires Kickstart 2.04 or higher"
 #define STR_YES				"Yes"
 #define STR_NO				"No"
 #define STR_NO_COMMAND 		"No command loaded"
