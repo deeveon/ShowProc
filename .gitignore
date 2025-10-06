@@ -1,6 +1,9 @@
 # Ignore editor files
 .vscode/
 
+# Ignore GitHub files
+.github/
+
 # Ignore object files and build artifacts
 *.o
 
