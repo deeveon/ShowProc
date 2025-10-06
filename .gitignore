@@ -1,15 +1,17 @@
-# Ignore editor files
+# Ignore GitHub & VSCode files
+.github/
 .vscode/
 
-# Ignore GitHub files
-.github/
+# Ignore release archives
+releases/
+*.lha
 
-# Ignore object files and build artifacts
+# Ignore build artifacts
 *.o
-
-# Ignore linker files
 *.lnk
+*.lst
+*.map
+*.tmp
 
 # Ignore executable files
-releases/
 ShowProc
