@@ -15,3 +15,10 @@ releases/
 
 # Ignore executable files
 ShowProc
+
+# Debug files
+*.debug
+
+# Ignore Codecraft files
+*.projecttree
+*.session
