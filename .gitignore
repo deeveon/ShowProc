@@ -22,3 +22,6 @@ ShowProc
 # Ignore Codecraft files
 *.projecttree
 *.session
+
+# Ignore test results
+*results*
