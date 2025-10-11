@@ -1,0 +1,20 @@
+.key OUT/K,NUM/A,RESULT/A,CASE/F/A
+.def OUT ""
+.bra {
+.ket }
+. 
+FAILAT 100
+
+echo "--------------------------------------------------------------------------------" {OUT}
+echo "Test case {NUM}: {CASE}" {OUT}
+echo "--------------------------------------------------------------------------------" {OUT}
+echo "" {OUT}
+{CASE} {OUT}
+if $rc eq {RESULT}
+	echo "" {OUT}
+	echo "=== pass ===" {OUT}
+else
+	echo "" {OUT}
+	echo "=== FAIL ===" {OUT}
+endif
+echo "" {OUT}
