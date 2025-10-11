@@ -7,42 +7,42 @@
 
     TEMPLATE
         VER=VERSION/S,ALL/S,SYS=SYSTEM/S,CLI=SHELL/S,F=FULL/S,TCB/S,
-		S=SHORT/S,PROCESS/N,COM=COMMAND/K
+        S=SHORT/S,PROCESS/N,COM=COMMAND/K
 
     PATH
         C:ShowProc
 
     FUNCTION
         ShowProc lists currently running tasks and processes along with
-		various	details about each one. It is intended to be an improvement
-		over the AmigaOS STATUS command. 
-		
-		ShowProc outputs information in an easy-to-read table view.	It shows
-		additional information (compared to STATUS) such as, for example, how
-		much stack a task/process is using. It also allows you to use standard
-		AmigaOS wildcards when searching for a Shell/CLI process.
+        various details about each one. It is intended to be an improvement
+        over the AmigaOS STATUS command.
 
-		ShowProc defaults to showing detailed information about all tasks
-		and processes. Running ShowProc with the CLI and SHORT options will
-		make it most resemble the default view of the AmigaOS STATUS command.
+        ShowProc outputs information in an easy-to-read table view. It shows
+        additional information (compared to STATUS) such as, for example, how
+        much stack a task/process is using. It also allows you to use standard
+        AmigaOS wildcards when searching for a Shell/CLI process.
 
-		    1> ShowProc CLI SHORT
+        ShowProc defaults to showing detailed information about all tasks
+        and processes. Running ShowProc with the CLI and SHORT options will
+        make it most resemble the default view of the AmigaOS STATUS command.
+
+            1> ShowProc CLI SHORT
 
     OPTIONS
         The following options are provided to control what ShowProc
         outputs to the console. If multiple output formats are provided,
-		ShowProc will use the most verbose one, with the exception of the
-		COMMAND option which overrides all others.
+        ShowProc will use the most verbose one, with the exception of the
+        COMMAND option which overrides all others.
         
             COMMAND > FULL > TCB > SHORT
 
-		Similarly, if multiple process lists are provided, ShowProc will use
-		the	most inclusive one.
+        Similarly, if multiple process lists are provided, ShowProc will use
+        the most inclusive one.
 
-		    ALL > SYSTEM > CLI
+            ALL > SYSTEM > CLI
 
-		VERSION or VER
-		    Outputs the program name, revision and revision date, then exits.
+        VERSION or VER
+            Outputs the program name, revision and revision date, then exits.
 
         ALL
             Outputs both SYSTEM and CLI information as separate tables.
@@ -52,10 +52,10 @@
 
         CLI or SHELL
             Outputs information about Shell/CLI processes.
-			
-			This view shows	additional Shell/CLI specific information such
-			as the current FAILAT level, last return code and if it is 
-			running	in the background.
+            
+            This view shows additional Shell/CLI specific information such
+            as the current FAILAT level, last return code and if it is 
+            running in the background.
 
         FULL or F (default)
             Outputs detailed information about each task or process.
@@ -64,8 +64,8 @@
             Outputs the same information as FULL except it omits the 
             task/process name.
 
-		SHORT or S
-		    Outputs only the process number and task/process name (if any).
+        SHORT or S
+            Outputs only the process number and task/process name (if any).
 
         PROCESS <process #>
             If a <process #> number (1-999) is provided, ShowProc will
@@ -74,11 +74,11 @@
         
         COMMAND or COM <command>|<pattern>
             You can search for a process using a command name or wildcard 
-			pattern. If found, the Shell/CLI number is output and the 
-			program return code is set to 0 (SUCCESS). If all processes
-			have been searched and a match hasn't been found, the return 
-			code is set to 5 (WARN). Otherwise, the	return code will be
-			set to 20 (FAIL).
+            pattern. If found, the Shell/CLI number is output and the 
+            program return code is set to 0 (SUCCESS). If all processes
+            have been searched and a match hasn't been found, the return 
+            code is set to 5 (WARN). Otherwise, the return code will be
+            set to 20 (FAIL).
 
     EXAMPLES
         1) Show detailed information about all tasks and processes.
@@ -94,7 +94,7 @@
               5 RexxMaster                   4  P       Wait    170   2048
               6 « ConClip »                  0  P       Wait    210   3000
               7 Workbench                    1  P    2  Wait    190   8000
-			  ...
+              ...
 
         2) Show detailed information about a single Shell/CLI process.
 
@@ -117,12 +117,12 @@
               5 RexxMaster
               6 « ConClip »
               7 Workbench
-			  ...
+              ...
 
         4) Send a BREAK to the Shell/CLI process executing the COPY command.
 
            1> ShowProc >RAM:xyz COMMAND=COPY
-           1> BREAK <RAM:xyz  >NIL: ?
+           1> BREAK <RAM:xyz >NIL: ?
 
     SEE ALSO
         STATUS, BREAK, ALIAS
