@@ -1,18 +1,18 @@
 VERSION		EQU	37
-REVISION	EQU	1
+REVISION	EQU	2
 
 DATE	MACRO
-		dc.b '3.10.2025'
+		dc.b '10.10.2025'
 		ENDM
 
 VERS	MACRO
-		dc.b 'ShowProc 37.1'
+		dc.b 'ShowProc 37.2'
 		ENDM
 
 VSTRING	MACRO
-		dc.b 'ShowProc 37.1 (3.10.2025)',13,10,0
+		dc.b 'ShowProc 37.2 (10.10.2025)',13,10,0
 		ENDM
 
 VERSTAG	MACRO
-		dc.b 0,'$VER: ShowProc 37.1 (3.10.2025)',0
+		dc.b 0,'$VER: ShowProc 37.2 (10.10.2025)',0
 		ENDM
