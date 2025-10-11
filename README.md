@@ -18,22 +18,26 @@ AmigaOS `status` command.
   - Failat level
   - Last return code
   - Whether or not it is a background process
+* Help file for integration into the AmigaOS 3.2 Help System (i.e.
+  type `help ShowProc` in a Shell/CLI to bring up the help)
 
 ## Requirements
 
 * AmigaOS/Kickstart 2.04 (V37) or above (m68k only)
-* Shell/CLI that is at least 80 characters in width to display
-  the full information
+* In order to display the full information properly, a Shell/CLI
+  window that is at least 80 characters in width is needed.
 
 Tested configurations:
 
 * AmigaOS 3.2.3 (V47)
+* AmigaOS 3.1 (V40)
 * AmigaOS 2.04 (V37)
 
 ## Installation Instructions
 
-Copy the `ShowProc` executable to the `SYS:C` drawer and the 
-`ShowProc.help` file to the `HELP:English/Sys/Commands` drawer.
+1. Copy the `ShowProc` executable to the `SYS:C` drawer
+2. Copy the `ShowProc.help` file to the `HELP:English/Sys/Commands`
+   drawer (AmigaOS 3.2)
 
 ## License
 
