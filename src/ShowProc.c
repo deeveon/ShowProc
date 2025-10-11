@@ -349,7 +349,7 @@ int PrintThisProcess(OutFrmt format, int* taskCount)
 		// Priority
 		Printf(" %4.4ld", process->pr_Task.tc_Node.ln_Pri);
 		// Type
-		Printf("  %2.-2s", "P");
+		Printf("  %-2.2s", "P");
 		// CLI number (unless 0 which means not a CLI process)
 		Printf(" %3.3ld", process->pr_TaskNum);
 		// Current state
@@ -410,7 +410,7 @@ int PrintTaskList(OutFrmt format, struct List* taskList, int* taskCount)
 						// Priority
 						Printf(" %4.4ld", task->tc_Node.ln_Pri);
 						// Type
-						Printf("  %2.-2s", "T");
+						Printf("  %-2.2s", "T");
 						// CLI number (Tasks never have a CLI number)
 						Printf(" %3.3s", "");
 						// Current state
@@ -454,7 +454,7 @@ int PrintTaskList(OutFrmt format, struct List* taskList, int* taskCount)
 						// Priority
 						Printf(" %4.4ld", process->pr_Task.tc_Node.ln_Pri);
 						// Type
-						Printf("  %2.-2s", "P");
+						Printf("  %-2.2s", "P");
 
 						// CLI number (unless 0 which means not a CLI process)
 						if (process->pr_TaskNum != 0)
@@ -584,6 +584,8 @@ BOOL CheckRequirements(void)
 		Printf("%s\n", STR_OS_TOO_OLD);
 		return FALSE;
 	}
+
+	return TRUE;
 }
 
 
