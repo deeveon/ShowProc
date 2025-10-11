@@ -51,11 +51,8 @@ GitHub at https://github.com/deeveon/ShowProc.
 
 ## Version History
 
- Version  Description
- -------  -------------------------------------------------------
- 37.1     Initial release
-
- 37.2     Added ability to display all tasks and processes, which
-          is now the default view. It also now checks the version
-          of Workbench/Kickstart at startup and exits gracefully
-          if < 2.04.
+| Version | Description                                             |
+|---------|---------------------------------------------------------|
+| 37.1    | Initial release
+| 37.2    | Added ability to display all tasks and processes, which is now the default view. It also now checks the version of Workbench/Kickstart at startup and exits gracefully if < 2.04.
+| |
