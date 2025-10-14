@@ -30,6 +30,7 @@ AmigaOS `status` command.
 #### Tested configurations:
 
 * AmigaOS 3.2.3 (V47)
+- AmigaOS 3.9 (V45) using Kickstart 3.1 ROM (V40)
 * AmigaOS 3.5 (V44) using Kickstart 3.1 ROM (V40)
 * AmigaOS 3.1 (V40)
 * AmigaOS 2.04 (V37)
