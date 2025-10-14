@@ -27,9 +27,10 @@ AmigaOS `status` command.
 * In order to display the full information properly, a Shell/CLI
   window that is at least 80 characters in width is needed.
 
-Tested configurations:
+#### Tested configurations:
 
 * AmigaOS 3.2.3 (V47)
+* AmigaOS 3.5 (V44) using Kickstart 3.1 ROM (V40)
 * AmigaOS 3.1 (V40)
 * AmigaOS 2.04 (V37)
 
@@ -55,4 +56,4 @@ GitHub at https://github.com/deeveon/ShowProc.
 |---------|---------------------------------------------------------|
 | 37.1    | Initial release
 | 37.2    | Added ability to display all tasks and processes, which is now the default view. It also now checks the version of Workbench/Kickstart at startup and exits gracefully if < 2.04.
-| |
+
