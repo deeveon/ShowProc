@@ -12,6 +12,7 @@ releases/
 *.lst
 *.map
 *.tmp
+*.bak
 
 # Ignore executable files
 ShowProc
