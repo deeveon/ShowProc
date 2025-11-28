@@ -20,7 +20,7 @@ const char* version = VERSTAG;
 //--------------------------------------------------------------------------------
 // Function prototypes
 //--------------------------------------------------------------------------------
-int 	ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, char** cmd_pat);
+int 	ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, char* cmd_pat);
 BOOL 	SanitizeCommandName(char* cleanName, const char* dirtyName);
 int 	PrintShellProcesses(Mode mode, OutFrmt format, int start, int finish, char* cmd_pat);
 int 	PrintThisProcess(OutFrmt format, int* taskCount);
@@ -42,7 +42,7 @@ int main(void)
 	int		start = 1;						// Process number to start with
 	int		finish = -1;					// Process number to finish with (set later)
  	char	cmd_pat[MAX_CMD_NAME_LEN + 1];	// Command pattern for COMMAND argument
-	BYTE	prev_program_pri;				// Program priority before we change it
+	BYTE	prev_program_pri = 0;			// Program priority before we change it
 	int		taskCount = 1;					// Number of tasks found
 	int		rc;
 
@@ -54,7 +54,7 @@ int main(void)
 	SetProgramName(PROGRAM);
 
 	// Parse command line arguments
-	rc = ParseCommandLineArgs(&mode, &format, &start, &finish, &cmd_pat);
+	rc = ParseCommandLineArgs(&mode, &format, &start, &finish, cmd_pat);
 	if (rc != RETURN_OK)
 		goto exit;
 
@@ -126,7 +126,7 @@ exit:
 //--------------------------------------------------------------------------------
 //	Parses command line arguments
 //--------------------------------------------------------------------------------
-int ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, char** cmd_pat)
+int ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, char* cmd_pat)
 {
 	struct 	RDArgs*	rdargs;
  	long	opts[OPT_COUNT] = {0};
