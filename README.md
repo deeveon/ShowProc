@@ -1,7 +1,7 @@
 # ShowProc
 
-`ShowProc` displays process information for all currently running 
-tasks & processes. It is intended to be a replacement for the 
+`ShowProc` displays process information for all currently running
+tasks & processes. It is intended to be a replacement for the
 AmigaOS `status` command.
 
 ## Improvements over `status`
@@ -11,15 +11,13 @@ AmigaOS `status` command.
 * Uses table views for better readability
 * Displays full information by default with options to show less
   detail
-* The `COMMAND` argument supports the use of standard AmigaOS 
+* The `COMMAND` argument supports the use of standard AmigaOS
   wildcards. For example, `Workb#?` will match the Workbench process.
 * Displays additional information including:
-  - How much of the stack is in use
-  - Failat level
-  - Last return code
-  - Whether or not it is a background process
-* Help file for integration into the AmigaOS 3.2 Help System (i.e.
-  type `help ShowProc` in a Shell/CLI to bring up the help)
+  * How much of the stack is in use
+  * Failat level
+  * Last return code
+  * Whether or not it is a background process
 
 ## Requirements
 
@@ -27,19 +25,21 @@ AmigaOS `status` command.
 * In order to display the full information properly, a Shell/CLI
   window that is at least 80 characters in width is needed.
 
-#### Tested configurations:
+### Tested configurations
 
 * AmigaOS 3.2.3 (V47)
-- AmigaOS 3.9 (V45) using Kickstart 3.1 ROM (V40)
+* AmigaOS 3.9 (V45)
 * AmigaOS 3.5 (V44) using Kickstart 3.1 ROM (V40)
 * AmigaOS 3.1 (V40)
 * AmigaOS 2.04 (V37)
 
 ## Installation Instructions
 
-1. Copy the `ShowProc` executable to the `SYS:C` drawer
-2. Copy the `ShowProc.help` file to the `HELP:English/Sys/Commands`
-   drawer (AmigaOS 3.2)
+1. Copy the `ShowProc` executable to the `SYS:C` drawer or another
+   location in your system's PATH.
+2. The `ShowProc.help` file can be integrated into the AmigaOS 3.2
+   help system by copying it to the `HELP:English/Sys/Commands`
+   drawer. Otherwise, copy it to whatever location you prefer.
 
 ## License
 
@@ -48,13 +48,13 @@ License. See the LICENSE.txt file for details.
 
 ## Source Code
 
-The SAS/C 6.58 source code for the application is available on 
-GitHub at https://github.com/deeveon/ShowProc.
+The SAS/C 6.58 source code for the application is available on
+GitHub at <https://github.com/deeveon/ShowProc>.
 
 ## Version History
 
 | Version | Description                                             |
-|---------|---------------------------------------------------------|
-| 37.1    | Initial release
-| 37.2    | Added ability to display all tasks and processes, which is now the default view. It also now checks the version of Workbench/Kickstart at startup and exits gracefully if < 2.04.
-
+|:-------:|---------------------------------------------------------|
+| 37.1    | Initial release |
+| 37.2    | - Added ability to display all tasks and processes, which is now the default view.<br>- Added checking the version of Workbench/Kickstart at startup. |
+| 37.3 (WIP) | - Added more error checking/handling to resolve some potential edge case issues.<br>- Adjusted output to fit on a 640 pixel wide display. |

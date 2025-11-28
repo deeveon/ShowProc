@@ -17,19 +17,33 @@
 // Embed version tag into binary
 const char* version = VERSTAG;
 
+//--------------------------------------------------------------------------------
+// Function prototypes
+//--------------------------------------------------------------------------------
+int 	ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, char** cmd_pat);
+BOOL 	SanitizeCommandName(char* cleanName, const char* dirtyName);
+int 	PrintShellProcesses(Mode mode, OutFrmt format, int start, int finish, char* cmd_pat);
+int 	PrintThisProcess(OutFrmt format, int* taskCount);
+int 	PrintTaskList(OutFrmt format, struct List* taskList, int* taskCount);
+BOOL 	CheckCommandMatch(const BSTR bstring, const char* cmd_pat);
+char* 	GetStateName(UBYTE state);
+BOOL 	CheckRequirements(void);
+BYTE 	bstrlen(BSTR bstring);
+size_t 	bstr2cstr(BSTR bstring, char* buffer, size_t bufsize);
+
 
 //--------------------------------------------------------------------------------
 //	main()
 //--------------------------------------------------------------------------------
 int main(void)
 {
-	Mode 	mode = MODE_SYSTEM;			// Default to system processes only
-	OutFrmt format = FORMAT_VERBOSE;	// Default to verbose output
-	int		start = 1;					// Process number to start with
-	int		finish = -1;				// Process number to finish with (set later)
- 	char*	cmd_pat = NULL;				// Command pattern for COMMAND argument
-	BYTE	prev_program_pri;			// Program priority before we change it
-	int		taskCount = 1;				// Number of tasks found
+	Mode 	mode = MODE_SYSTEM;				// Default to system tasks/processes only
+	OutFrmt format = FORMAT_VERBOSE;		// Default to verbose output
+	int		start = 1;						// Process number to start with
+	int		finish = -1;					// Process number to finish with (set later)
+ 	char	cmd_pat[MAX_CMD_NAME_LEN + 1];	// Command pattern for COMMAND argument
+	BYTE	prev_program_pri;				// Program priority before we change it
+	int		taskCount = 1;					// Number of tasks found
 	int		rc;
 
 	// Check minimum Kickstart & AmigaOS version requirements
@@ -39,14 +53,14 @@ int main(void)
 	// Set the program name for our own process
 	SetProgramName(PROGRAM);
 
-	// Capture current program priority & set the priority a bit higher to reduce
-	// the risk of changes occurring while reading task/process & CLI info
-	prev_program_pri = SetTaskPri(FindTask(NULL), PROGRAM_PRIORITY);
-
 	// Parse command line arguments
 	rc = ParseCommandLineArgs(&mode, &format, &start, &finish, &cmd_pat);
 	if (rc != RETURN_OK)
 		goto exit;
+
+	// Capture current program priority & set the priority a bit higher to reduce
+	// the risk of changes occurring while reading task/process & CLI info
+	prev_program_pri = SetTaskPri(FindTask(NULL), PROGRAM_PRIORITY);
 
 	// Print out Shell/CLI processes
 	if (mode == MODE_ALL || mode == MODE_CLI)
@@ -124,14 +138,14 @@ int ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, c
 	if (rdargs == NULL) {
 		PrintFault(IoErr(), NULL);
 		rc = RETURN_FAIL;
-		goto exit;
+		goto cleanup;
 	}
 
 	// VERSION argument
 	if (opts[OPT_VERSION]) {
 		Printf("%s", VSTRING);
-		FreeArgs(rdargs);
-		exit(RETURN_OK);  // Terminate the program immediately after showing version info
+		rc = RETURN_WARN;  // Not an error, but we want to exit after showing version
+		goto cleanup;
 	}
 
 	// Determine mode based on arguments received
@@ -151,7 +165,7 @@ int ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, c
 		if (*start < 1 || *start > 999) {
 			Printf("%s\n", STR_INV_PROC_NUM);
 			rc = RETURN_FAIL;
-			goto exit;
+			goto cleanup;
 		}
 	}
 
@@ -164,17 +178,52 @@ int ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, c
 	if (opts[OPT_COMMAND]) {
 		*mode = MODE_CLI;									// Command search only applies to CLI processes
 		*format = FORMAT_COMMAND;							// Overrides all other formats
-		*cmd_pat = (char*)opts[OPT_COMMAND];
+		// *cmd_pat = (char*)opts[OPT_COMMAND];
+		if (!SanitizeCommandName(cmd_pat, (char*)opts[OPT_COMMAND])) {
+			rc = RETURN_FAIL;
+			goto cleanup;
+		}
 		*start = 1;
 		*finish = MaxCli() > 1000 ? 999 : MaxCli() - 1;  	// Search all CLIs
 	}
 
-exit:
+cleanup:
 
 	if (rdargs)
 		FreeArgs(rdargs);
 
 	return rc;
+}
+
+
+//--------------------------------------------------------------------------------
+// Sanitizes/validates the specified command name
+// Returns TRUE if the name is valid after sanitization, FALSE otherwise.
+//--------------------------------------------------------------------------------
+BOOL SanitizeCommandName(char* cleanName, const char* dirtyName)
+{
+	// Validate parameters
+	if (dirtyName == NULL || strlen(dirtyName) == 0 || strlen(dirtyName) > MAX_CMD_NAME_LEN) {
+		Printf("%s\n", STR_ERR_INV_CMD_NAME);
+		return FALSE;
+	}
+
+	if (cleanName == NULL) {
+		Printf("%s: %s\n", STR_ERR_INV_POINTER, "cleanName");
+		return FALSE;
+	}
+
+	// Copy the dirty name to the clean name buffer
+	strncpy(cleanName, dirtyName, MAX_CMD_NAME_LEN);
+	cleanName[MAX_CMD_NAME_LEN] = '\0';				// Ensure null termination
+
+	// ReadArgs already filters out invalid characters, so we don't need to do
+	// that here. Instead, we can just check for a trailing colon & remove it.
+	if (cleanName[strlen(cleanName) - 1] == ':') {
+		cleanName[strlen(cleanName) - 1] = '\0';
+	}
+
+	return TRUE;
 }
 
 
@@ -267,9 +316,9 @@ int PrintShellProcesses(Mode mode, OutFrmt format, int start, int finish, char* 
 			// Command name if not TCB format
 			if (format != FORMAT_TCB) {
 				if (bstrlen(cli->cli_CommandName) > 0)
-					Printf(" %-35.35b",	cli->cli_CommandName);		// %b prints BSTR strings (AmigaOS only)
+					Printf(" %-33.33b",	cli->cli_CommandName);		// %b prints BSTR strings (AmigaOS only)
 				else
-					Printf(" %-35.35s",	STR_NO_COMMAND);
+					Printf(" %-33.33s",	STR_NO_COMMAND);
 			}
 
 			// Print the rest of the process details if not SHORT format
@@ -286,7 +335,7 @@ int PrintShellProcesses(Mode mode, OutFrmt format, int start, int finish, char* 
 				// Failat level
 				Printf(" %4.4ld", cli->cli_FailLevel);
 				// Last return code
-				Printf(" %4.4ld", cli->cli_ReturnCode);
+				Printf(" %3.3ld", cli->cli_ReturnCode);
 				// Background process?
 				Printf(" %4.3s", cli->cli_Background  ? STR_YES : STR_NO);
 			}
@@ -500,7 +549,7 @@ int PrintTaskList(OutFrmt format, struct List* taskList, int* taskCount)
 // Checks if the given command pattern matches the command name.
 // Returns TRUE if it matches, FALSE if it doesn't or if there's an error.
 //--------------------------------------------------------------------------------
-BOOL CheckCommandMatch(const BSTR bstring, const char* cmd_pat)
+BOOL CheckCommandMatch(const BSTR cmd_name, const char* cmd_pat)
 {
 	// ParsePatternNoCase() docs say to make pattern buffer at least double the
 	// length of the string to match + 2
@@ -509,11 +558,11 @@ BOOL CheckCommandMatch(const BSTR bstring, const char* cmd_pat)
 	long	result;
 
 	// Validate parameters
-	if (bstring == NULL || cmd_pat == NULL || bstrlen(bstring) <= 0 || strlen(cmd_pat) <= 0)
+	if (cmd_name == NULL || cmd_pat == NULL || bstrlen(cmd_name) <= 0 || strlen(cmd_pat) <= 0)
 		return FALSE;
 
 	// Convert the command name from a BSTR to a C string
-	if (bstr2cstr(bstring, cmd, sizeof(cmd)) < 0) {
+	if (bstr2cstr(cmd_name, cmd, sizeof(cmd)) < 0) {
 		Printf(" %s\n", STR_ERR_GET_CMD);
 		return FALSE;
 	}

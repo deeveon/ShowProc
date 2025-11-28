@@ -7,17 +7,17 @@
 
 // Modes
 typedef enum Mode { 
-	MODE_ALL,
-	MODE_CLI, 
-	MODE_SYSTEM
+	MODE_ALL,				// Show both system & Shell/CLI processes
+	MODE_CLI,				// Show Shell/CLI processes only
+	MODE_SYSTEM				// Show system tasks/processes
 } Mode;
 
 // Output formats
 typedef enum OutFrmt { 
-	FORMAT_VERBOSE, 
-	FORMAT_TCB,
-	FORMAT_SHORT, 
-	FORMAT_COMMAND
+	FORMAT_VERBOSE, 		// Show detailed info about each task/process
+	FORMAT_TCB,				// Same as VERBOSE minus name
+	FORMAT_SHORT, 			// Show only task/process number & name
+	FORMAT_COMMAND			// Show only the Shell/CLI process number
 } OutFrmt;
 
 //--------------------------------------------------------------------------------
@@ -47,6 +47,8 @@ typedef enum OutFrmt {
 #define PROGRAM_PRIORITY	11		// High enough to reduce risk of changes while 
 									// reading tasks, but not too high to
 									// interfere with system operation
+#define MAX_CMD_NAME_LEN	102		// Max command name length
+
 
 //--------------------------------------------------------------------------------
 // String constants
@@ -73,16 +75,18 @@ typedef enum OutFrmt {
 #define STR_STATE_UNDEFINED	"Undef"
 
 // Error messages
-#define STR_ERR_GET_CLI		"Error getting CLI info"
-#define STR_ERR_GET_CMD		"Error getting command name"
+#define STR_ERR_GET_CLI			"Error getting CLI info"
+#define STR_ERR_GET_CMD			"Error getting command name"
 #define STR_ERR_GET_OWN_PROC	"Error getting own process info"
-#define STR_INV_PROC_NUM	"Process number must be between 1 and 999"
-#define STR_INV_TASK_FMT	"Invalid task output format"
-#define STR_INV_TASK_LIST	"Invalid task list"
-#define STR_INV_TASK_TYPE	"Invalid task type"
-#define STR_KS_TOO_OLD		"This program requires Kickstart 2.04 or higher"
-#define STR_OS_TOO_OLD		"This program requires AmigaOS 2.04 or higher"
-#define STR_INV_CMD_PAT		"Invalid command pattern"
+#define STR_ERR_INV_CMD_NAME	"Invalid command name"
+#define STR_ERR_INV_POINTER		"Invalid pointer"
+#define STR_INV_PROC_NUM		"Process number must be between 1 and 999"
+#define STR_INV_TASK_FMT		"Invalid task output format"
+#define STR_INV_TASK_LIST		"Invalid task list"
+#define STR_INV_TASK_TYPE		"Invalid task type"
+#define STR_KS_TOO_OLD			"This program requires Kickstart 2.04 or higher"
+#define STR_OS_TOO_OLD			"This program requires AmigaOS 2.04 or higher"
+#define STR_INV_CMD_PAT			"Invalid command pattern"
 
 //--------------------------------------------------------------------------------
 // CLI table headings
@@ -93,16 +97,16 @@ typedef enum OutFrmt {
 
 #define NAME_TOP			""
 #define CLI_NAME   			"Command Name"
-#define NAME_DIV      		"-----------------------------------"
+#define NAME_DIV      		"---------------------------------"
 
 #define CLI_INFO_TOP		"           Stack  Stack Fail"
-#define CLI_INFO_BOT		" Pri   GV   Used   Size  Lvl   RC   BG"
-#define CLI_INFO_DIV		"---- ---- ------ ------ ---- ---- ----"
+#define CLI_INFO_BOT		" Pri   GV   Used   Size  Lvl  RC   BG"
+#define CLI_INFO_DIV		"---- ---- ------ ------ ---- --- ----"
 
 // CLI heading format strings
-#define CLI_VERBOSE			" %3s %-35s %-38s\n"
+#define CLI_VERBOSE			" %3s %-33s %-37s\n"
 #define CLI_TCB				" %3s %-38s\n"
-#define CLI_SHORT			" %3s %-35s\n"
+#define CLI_SHORT			" %3s %-33s\n"
 
 //--------------------------------------------------------------------------------
 // System tasks/processes headings
@@ -116,9 +120,9 @@ typedef enum OutFrmt {
 #define SYS_INFO_DIV		"---- --- --- ----- ------ ------"
 
 // Task heading format strings
-#define SYS_VERBOSE			" %3s %-35s %-29s\n"
+#define SYS_VERBOSE			" %3s %-33s %-29s\n"
 #define SYS_TCB				" %3s %-29s\n"
-#define SYS_SHORT			" %3s %-35s\n"
+#define SYS_SHORT			" %3s %-33s\n"
 
 //--------------------------------------------------------------------------------
 // Output formats
@@ -149,19 +153,6 @@ typedef enum OutFrmt {
 #define SYS_SHORT_TOP		NUM_TOP, NAME_TOP
 #define SYS_SHORT_BOT		NUM_BOT, SYS_NAME
 #define SYS_SHORT_DIV		NUM_DIV, NAME_DIV
-
-//--------------------------------------------------------------------------------
-// Function prototypes
-//--------------------------------------------------------------------------------
-int 	ParseCommandLineArgs(Mode* mode, OutFrmt* format, int* start, int* finish, char** cmd_pat);
-int 	PrintShellProcesses(Mode mode, OutFrmt format, int start, int finish, char* cmd_pat);
-int 	PrintThisProcess(OutFrmt format, int* taskCount);
-int 	PrintTaskList(OutFrmt format, struct List* taskList, int* taskCount);
-BOOL 	CheckCommandMatch(const BSTR bstring, const char* cmd_pat);
-char* 	GetStateName(UBYTE state);
-BOOL 	CheckRequirements(void);
-BYTE 	bstrlen(BSTR bstring);
-size_t 	bstr2cstr(BSTR bstring, char* buffer, size_t bufsize);
 
 
 #endif // SHOWPROC_H
